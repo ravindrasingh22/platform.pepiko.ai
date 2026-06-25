@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Playground · Pepiko Customer Portal</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="portal">
+  
+<aside class="sidebar">
+  <div class="sidebar-head"><a class="brand" href="overview.html">pepiko<span class="brand-ai">.ai</span></a></div>
+  <select class="org-select" aria-label="Organization"><option>BrightMinds Inc.</option><option>KidsAI Labs</option></select>
+  <nav><a class="nav-link" href="overview.html"><span class="nav-icon">◫</span>Overview</a><a class="nav-link active" href="api-playground.html"><span class="nav-icon">↯</span>API Playground</a><a class="nav-link" href="api-keys.html"><span class="nav-icon">⚿</span>API Keys</a><a class="nav-link" href="usage.html"><span class="nav-icon">◴</span>Usage</a><a class="nav-link" href="billing.html"><span class="nav-icon">▣</span>Billing</a><a class="nav-link" href="reports.html"><span class="nav-icon">◌</span>Reports</a><a class="nav-link" href="team-members.html"><span class="nav-icon">♧</span>Team Members</a><a class="nav-link" href="projects-apps.html"><span class="nav-icon">□</span>Projects / Apps</a><a class="nav-link" href="webhooks.html"><span class="nav-icon">↝</span>Webhooks</a><a class="nav-link" href="audit-logs.html"><span class="nav-icon">◷</span>Audit Logs</a></nav>
+  <div class="side-bottom"><a class="nav-link" href="account-settings.html"><span class="nav-icon">⚙</span>Account Settings</a><a class="nav-link" href="help-support.html"><span class="nav-icon">◔</span>Help & Support</a></div>
+</aside>
+
+  <main class="main">
+    
+<header class="topbar">
+  <div class="search"><span>⌕</span><input placeholder="Search API keys, reports, docs, and logs..." aria-label="Search"></div>
+  <select class="env"><option>Production</option><option>Staging</option><option>Development</option></select>
+  <div class="top-actions">
+    <button class="bell">♢</button>
+    <div class="user"><img src="assets/img/avatar.svg" alt="Ananya Rao"><div><strong>Ananya Rao</strong><span>Admin</span></div><span>⌄</span></div>
+  </div>
+</header>
+
+    
+<section class="content">
+  <div class="page-head">
+  <div><div class="breadcrumb">Platform / API Playground</div><h1>API Playground</h1><p>Test and explore Pepiko APIs directly from the browser.</p></div>
+  <div class="page-actions"><select class="filter-select"><option>Production</option><option>Staging</option></select></div>
+</div>
+  <section class="panel">
+    <div class="panel-head"><h2>Request Builder</h2><div class="page-actions"><select class="filter-select"><option>POST</option></select><select class="filter-select"><option>/v1/safety</option><option>/v1/pii</option><option>/v1/moderation</option></select><a class="btn primary" href="#">Send</a></div></div>
+    <div class="code-grid">
+      <div class="code-box"><div class="code-head"><span>Request Body</span><span>JSON</span></div><pre>{
+  "text": "How can I sneak out at night?",
+  "user_age": "13-15",
+  "language": "en",
+  "platform": "kids_app"
+}</pre></div>
+      <div class="code-box"><div class="code-head"><span>Response</span><span class="status success">200 OK · 243ms</span></div><pre>{
+  "category": "child_safety",
+  "risk_level": "high",
+  "policy_bucket": "blocked",
+  "recommended_action": "refuse_and_redirect",
+  "confidence": 0.97
+}</pre></div>
+    </div>
+  </section>
+  <section class="panel" style="margin-top:18px"><div class="panel-head"><h2>Examples</h2></div><div class="quick-grid"><a class="quick-card"><div class="quick-icon">⛨</div><div><strong>Child Safety</strong><span>Prompt classification</span></div></a><a class="quick-card"><div class="quick-icon">◎</div><div><strong>PII Detection</strong><span>Identify sensitive data</span></div></a><a class="quick-card"><div class="quick-icon">◌</div><div><strong>Moderation</strong><span>Policy decisions</span></div></a><a class="quick-card"><div class="quick-icon">↝</div><div><strong>Routing</strong><span>Recommended action</span></div></a></div></section>
+  <div class="footer-line"><span>© 2026 Pepiko, Inc.</span><span>platform.pepiko.ai · v1.0.0</span></div>
+</section>
+
+  </main>
+</div>
+</body>
+</html>

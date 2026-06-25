@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Keys · Pepiko Customer Portal</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="portal">
+  
+<aside class="sidebar">
+  <div class="sidebar-head"><a class="brand" href="overview.html">pepiko<span class="brand-ai">.ai</span></a></div>
+  <select class="org-select" aria-label="Organization"><option>BrightMinds Inc.</option><option>KidsAI Labs</option></select>
+  <nav><a class="nav-link" href="overview.html"><span class="nav-icon">◫</span>Overview</a><a class="nav-link" href="api-playground.html"><span class="nav-icon">↯</span>API Playground</a><a class="nav-link active" href="api-keys.html"><span class="nav-icon">⚿</span>API Keys</a><a class="nav-link" href="usage.html"><span class="nav-icon">◴</span>Usage</a><a class="nav-link" href="billing.html"><span class="nav-icon">▣</span>Billing</a><a class="nav-link" href="reports.html"><span class="nav-icon">◌</span>Reports</a><a class="nav-link" href="team-members.html"><span class="nav-icon">♧</span>Team Members</a><a class="nav-link" href="projects-apps.html"><span class="nav-icon">□</span>Projects / Apps</a><a class="nav-link" href="webhooks.html"><span class="nav-icon">↝</span>Webhooks</a><a class="nav-link" href="audit-logs.html"><span class="nav-icon">◷</span>Audit Logs</a></nav>
+  <div class="side-bottom"><a class="nav-link" href="account-settings.html"><span class="nav-icon">⚙</span>Account Settings</a><a class="nav-link" href="help-support.html"><span class="nav-icon">◔</span>Help & Support</a></div>
+</aside>
+
+  <main class="main">
+    
+<header class="topbar">
+  <div class="search"><span>⌕</span><input placeholder="Search API keys, reports, docs, and logs..." aria-label="Search"></div>
+  <select class="env"><option>Production</option><option>Staging</option><option>Development</option></select>
+  <div class="top-actions">
+    <button class="bell">♢</button>
+    <div class="user"><img src="assets/img/avatar.svg" alt="Ananya Rao"><div><strong>Ananya Rao</strong><span>Admin</span></div><span>⌄</span></div>
+  </div>
+</header>
+
+    
+<section class="content">
+  <div class="page-head">
+  <div><div class="breadcrumb">Platform / API Keys</div><h1>API Keys</h1><p>Manage your API keys. Keep them secure and rotate them regularly.</p></div>
+  <div class="page-actions"><a class="btn primary" href="#">＋ Create API Key</a></div>
+</div>
+  <div class="grid kpis four"><article class="card">
+  <div class="card-title">Active Keys</div>
+  <div class="card-value">12</div>
+  <div class="card-note">2 expiring soon</div>
+</article><article class="card">
+  <div class="card-title">Live Keys</div>
+  <div class="card-value">5</div>
+  <div class="card-note">Production access</div>
+</article><article class="card">
+  <div class="card-title">Test Keys</div>
+  <div class="card-value">7</div>
+  <div class="card-note">Non-production</div>
+</article><article class="card">
+  <div class="card-title">Last Used</div>
+  <div class="card-value">2m ago</div>
+  <div class="card-note">pk_live...8f3a</div>
+</article></div>
+  <section class="panel">
+    <div class="panel-head"><h2>API Keys</h2><div class="filters"><input class="filter-input" placeholder="Search..."><select class="filter-select"><option>All status</option></select></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Name</th><th>Key</th><th>Created</th><th>Last Used</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr><td>Production Key</td><td>pk_live...8f3a</td><td>May 18, 2026</td><td>2m ago</td><td><span class="status active">Active</span></td><td>◉ &nbsp; ✎ &nbsp; ⋯</td></tr><tr><td>Staging Key</td><td>pk_test...29dc</td><td>May 10, 2026</td><td>12h ago</td><td><span class="status active">Active</span></td><td>◉ &nbsp; ✎ &nbsp; ⋯</td></tr><tr><td>Development Key</td><td>pk_test...7b0f</td><td>Apr 29, 2026</td><td>2d ago</td><td><span class="status warning">Rotate soon</span></td><td>◉ &nbsp; ✎ &nbsp; ⋯</td></tr></tbody></table></div>
+  </section>
+  <div class="footer-line"><span>© 2026 Pepiko, Inc.</span><span>platform.pepiko.ai · v1.0.0</span></div>
+</section>
+  </main>
+</div>
+</body>
+</html>

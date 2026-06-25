@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports · Pepiko Customer Portal</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="portal">
+  
+<aside class="sidebar">
+  <div class="sidebar-head"><a class="brand" href="overview.html">pepiko<span class="brand-ai">.ai</span></a></div>
+  <select class="org-select" aria-label="Organization"><option>BrightMinds Inc.</option><option>KidsAI Labs</option></select>
+  <nav><a class="nav-link" href="overview.html"><span class="nav-icon">◫</span>Overview</a><a class="nav-link" href="api-playground.html"><span class="nav-icon">↯</span>API Playground</a><a class="nav-link" href="api-keys.html"><span class="nav-icon">⚿</span>API Keys</a><a class="nav-link" href="usage.html"><span class="nav-icon">◴</span>Usage</a><a class="nav-link" href="billing.html"><span class="nav-icon">▣</span>Billing</a><a class="nav-link active" href="reports.html"><span class="nav-icon">◌</span>Reports</a><a class="nav-link" href="team-members.html"><span class="nav-icon">♧</span>Team Members</a><a class="nav-link" href="projects-apps.html"><span class="nav-icon">□</span>Projects / Apps</a><a class="nav-link" href="webhooks.html"><span class="nav-icon">↝</span>Webhooks</a><a class="nav-link" href="audit-logs.html"><span class="nav-icon">◷</span>Audit Logs</a></nav>
+  <div class="side-bottom"><a class="nav-link" href="account-settings.html"><span class="nav-icon">⚙</span>Account Settings</a><a class="nav-link" href="help-support.html"><span class="nav-icon">◔</span>Help & Support</a></div>
+</aside>
+
+  <main class="main">
+    
+<header class="topbar">
+  <div class="search"><span>⌕</span><input placeholder="Search API keys, reports, docs, and logs..." aria-label="Search"></div>
+  <select class="env"><option>Production</option><option>Staging</option><option>Development</option></select>
+  <div class="top-actions">
+    <button class="bell">♢</button>
+    <div class="user"><img src="assets/img/avatar.svg" alt="Ananya Rao"><div><strong>Ananya Rao</strong><span>Admin</span></div><span>⌄</span></div>
+  </div>
+</header>
+
+    
+<section class="content">
+  <div class="page-head">
+  <div><div class="breadcrumb">Platform / Reports</div><h1>Reports</h1><p>Analyze usage, safety decisions, latency, and product performance.</p></div>
+  <div class="page-actions"><select class="filter-select"><option>May 12 – May 18, 2026</option></select><a class="btn primary" href="#">Create Report</a></div>
+</div>
+  <div class="grid kpis four"><article class="card">
+  <div class="card-title">Total Requests</div>
+  <div class="card-value">24.8M</div>
+  <div class="card-note">All products</div>
+</article><article class="card">
+  <div class="card-title">Success Rate</div>
+  <div class="card-value">98.6%</div>
+  <div class="card-note">API availability</div>
+</article><article class="card">
+  <div class="card-title">Error Rate</div>
+  <div class="card-value">1.21%</div>
+  <div class="card-note">Request failures</div>
+</article><article class="card">
+  <div class="card-title">Avg Latency</div>
+  <div class="card-value">320ms</div>
+  <div class="card-note">p95 latency</div>
+</article></div>
+  <div class="dashboard-grid">
+    <section class="panel"><div class="panel-head"><h2>Requests Over Time</h2></div><div class="chart"><svg viewBox="0 0 720 240" preserveAspectRatio="none"><polyline points="0,160 100,150 200,90 300,72 400,132 500,118 600,138 720,78" fill="none" stroke="#0047D8" stroke-width="4"/></svg></div></section>
+    <section class="panel"><div class="panel-head"><h2>By Product</h2></div><div class="donut-wrap"><div class="donut"><div class="donut-center"><strong>24.8M</strong><span>Total</span></div></div><div class="legend"><div class="legend-item"><span class="dot"></span>Child Safety</div><div class="legend-item"><span class="dot green"></span>PII Detection</div><div class="legend-item"><span class="dot ink"></span>Moderation</div><div class="legend-item"><span class="dot amber"></span>Prompt Classifier</div></div></div></section>
+    <section class="panel"><div class="panel-head"><h2>Saved Reports</h2></div><div class="activity"><div class="activity-item"><div class="activity-icon">◌</div><div><strong>Weekly Usage</strong><span>CSV + PDF</span></div><span>Ready</span></div><div class="activity-item"><div class="activity-icon">⛨</div><div><strong>Safety Trend</strong><span>Risk buckets</span></div><span>Ready</span></div><div class="activity-item"><div class="activity-icon">▣</div><div><strong>Billing Export</strong><span>Finance report</span></div><span>Ready</span></div></div></section>
+  </div>
+  <div class="footer-line"><span>© 2026 Pepiko, Inc.</span><span>platform.pepiko.ai · v1.0.0</span></div>
+</section>
+
+  </main>
+</div>
+</body>
+</html>

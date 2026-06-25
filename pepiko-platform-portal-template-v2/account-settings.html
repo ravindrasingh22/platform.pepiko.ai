@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account Settings · Pepiko Customer Portal</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="portal">
+  
+<aside class="sidebar">
+  <div class="sidebar-head"><a class="brand" href="overview.html">pepiko<span class="brand-ai">.ai</span></a></div>
+  <select class="org-select" aria-label="Organization"><option>BrightMinds Inc.</option><option>KidsAI Labs</option></select>
+  <nav><a class="nav-link" href="overview.html"><span class="nav-icon">◫</span>Overview</a><a class="nav-link" href="api-playground.html"><span class="nav-icon">↯</span>API Playground</a><a class="nav-link" href="api-keys.html"><span class="nav-icon">⚿</span>API Keys</a><a class="nav-link" href="usage.html"><span class="nav-icon">◴</span>Usage</a><a class="nav-link" href="billing.html"><span class="nav-icon">▣</span>Billing</a><a class="nav-link" href="reports.html"><span class="nav-icon">◌</span>Reports</a><a class="nav-link" href="team-members.html"><span class="nav-icon">♧</span>Team Members</a><a class="nav-link" href="projects-apps.html"><span class="nav-icon">□</span>Projects / Apps</a><a class="nav-link" href="webhooks.html"><span class="nav-icon">↝</span>Webhooks</a><a class="nav-link" href="audit-logs.html"><span class="nav-icon">◷</span>Audit Logs</a></nav>
+  <div class="side-bottom"><a class="nav-link active" href="account-settings.html"><span class="nav-icon">⚙</span>Account Settings</a><a class="nav-link" href="help-support.html"><span class="nav-icon">◔</span>Help & Support</a></div>
+</aside>
+
+  <main class="main">
+    
+<header class="topbar">
+  <div class="search"><span>⌕</span><input placeholder="Search API keys, reports, docs, and logs..." aria-label="Search"></div>
+  <select class="env"><option>Production</option><option>Staging</option><option>Development</option></select>
+  <div class="top-actions">
+    <button class="bell">♢</button>
+    <div class="user"><img src="assets/img/avatar.svg" alt="Ananya Rao"><div><strong>Ananya Rao</strong><span>Admin</span></div><span>⌄</span></div>
+  </div>
+</header>
+
+    
+<section class="content">
+  <div class="page-head">
+  <div><div class="breadcrumb">Platform / Account Settings</div><h1>Account Settings</h1><p>Manage organization profile, security, notifications, billing contact, and invoices.</p></div>
+  <div class="page-actions"><a class="btn primary" href="#">Save Changes</a></div>
+</div>
+  <div class="tabs"><a class="tab active">Profile</a><a class="tab">Security</a><a class="tab">Notifications</a><a class="tab">Billing & Invoices</a></div>
+  <div class="split-layout">
+    <section class="panel">
+      <div class="panel-head"><h2>Organization Profile</h2></div>
+      <div class="form-grid two">
+        <label>Full name<input value="Ananya Rao"></label>
+        <label>Company<input value="BrightMinds Inc."></label>
+        <label>Email<input value="ananya@brightminds.ai"></label>
+        <label>Role<select><option>Admin</option><option>Developer</option><option>Viewer</option></select></label>
+        <label>Default environment<select><option>Production</option><option>Staging</option></select></label>
+        <label>Data retention<select><option>30 days</option><option>90 days</option><option>Custom</option></select></label>
+      </div>
+    </section>
+    <aside>
+      <div class="side-card"><h3>Profile Picture</h3><img src="assets/img/avatar.svg" alt="" style="width:90px;border-radius:999px"><p>Used inside the customer portal.</p><a class="btn" href="#">Change</a></div>
+      <div class="side-card"><h3>Two-Factor Authentication</h3><p>Status: <span class="status active">Enabled</span></p><a class="btn" href="#">Manage 2FA</a></div>
+    </aside>
+  </div>
+  <div class="split-layout" style="margin-top:18px">
+    <section class="panel"><div class="panel-head"><h2>Change Password</h2></div><div class="form-grid"><label>Current password<input type="password" placeholder="Current password"></label><label>New password<input type="password" placeholder="New password"></label><label>Confirm password<input type="password" placeholder="Confirm password"></label><a class="btn primary" href="#">Update Password</a></div></section>
+    <section class="panel"><div class="panel-head"><h2>API Settings</h2></div><div class="form-grid"><label>Default request limit<input value="1000"></label><label>Response format<select><option>JSON</option><option>JSON verbose</option></select></label><a class="btn primary" href="#">Save API Settings</a></div></section>
+  </div>
+  <div class="footer-line"><span>© 2026 Pepiko, Inc.</span><span>platform.pepiko.ai · v1.0.0</span></div>
+</section>
+
+  </main>
+</div>
+</body>
+</html>

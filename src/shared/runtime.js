@@ -1,0 +1,32 @@
+const API_BASE = '';
+let token = localStorage.getItem('pepiko_customer_token') || '';
+let user = JSON.parse(localStorage.getItem('pepiko_customer_user') || 'null');
+let currentPage = 'dashboard';
+let cache = {};
+const pages = [
+  ['dashboard','Overview','⌂'],['playground','API Playground','▣'],['apiKeys','API Keys','🔑'],['usage','Usage','◷'],['billing','Billing / Credits','◉'],['reports','Reports','▧'],['projects','Projects / Apps','▦'],['team','Team Members','◌'],['webhooks','Webhooks','⤴'],['audit','Audit Logs','≣'],['support','Help / Support','?']
+];
+const routeBase = '/platform';
+const pageRoutes = {dashboard:'dashboard',playground:'playground',apiKeys:'api-keys',usage:'usage',billing:'billing',reports:'reports',projects:'projects',team:'team',webhooks:'webhooks',audit:'audit',support:'support'};
+const routePages = Object.fromEntries(Object.entries(pageRoutes).map(([page, route]) => [route, page]));
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
+const money = n => Number(n || 0).toLocaleString(undefined,{maximumFractionDigits:2});
+const date = d => d ? new Date(d).toLocaleString() : '-';
+const badge = v => `<span class="status ${esc(String(v||'').toLowerCase())}">${esc(v||'-')}</span>`;
+function brand(panel='Customer Portal'){return `<div class="login-brand"><div class="brand">pepiko<span class="brand-ai">.ai</span></div><div class="brand-panel">${panel}</div></div>`}
+function table(headers, rows){return `<table class="table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}" class="empty">No data yet</td></tr>`}</tbody></table>`}
+function setStatus(msg='', err=false){const el=$('#status'); if(el){el.textContent=msg; el.style.color=err?'#b42318':'#5f6f8a'}}
+async function api(path, opts={}){const headers=opts.headers||{}; if(token)headers.Authorization=`Bearer ${token}`; if(opts.body && !headers['Content-Type'])headers['Content-Type']='application/json'; const res=await fetch(API_BASE+path,{...opts,headers}); let data=null; try{data=await res.json()}catch{} if(!res.ok)throw new Error((data&&data.detail)||res.statusText); return data;}
+function routeForPage(id){return `${routeBase}/${pageRoutes[id]||pageRoutes.dashboard}`}
+function pageFromPath(path=location.pathname){const clean=path.replace(/\/+$/,''); if(clean===''||clean===routeBase)return 'dashboard'; if(clean.startsWith(`${routeBase}/`)){return routePages[clean.slice(routeBase.length+1)]||'dashboard'} return 'dashboard'}
+function pushRoute(id){const next=routeForPage(id); if(location.pathname!==next)history.pushState({page:id},'',next)}
+function logout(){localStorage.removeItem('pepiko_customer_token');localStorage.removeItem('pepiko_customer_user');location.href=routeBase+'/'}
+async function login(e){e.preventDefault(); setStatus('Signing in...'); try{const d=await api('/api/customer/auth/login',{method:'POST',body:JSON.stringify({email:email.value,password:password.value})}); token=d.access_token; user=d.user; localStorage.setItem('pepiko_customer_token',token); localStorage.setItem('pepiko_customer_user',JSON.stringify(user)); renderApp()}catch(err){setStatus(err.message,true)}}
+function shell(){document.body.innerHTML=`<div class="portal"><aside class="sidebar"><div class="sidebar-head"><a class="brand" href="${routeForPage('dashboard')}" data-route="dashboard"><span>pepiko</span><span class="brand-ai">.ai</span></a></div><select class="org-select" aria-label="Organization"><option>${esc(user?.organization_name||'BrightMinds Inc.')}</option></select><nav>${pages.filter(p=>p[0]!=='support').map(p=>`<a class="nav-link" href="${routeForPage(p[0])}" data-page="${p[0]}"><span class="nav-icon">${p[2]}</span>${p[1]}</a>`).join('')}</nav><div class="side-bottom"><a class="nav-link" href="${routeForPage('support')}" data-page="support"><span class="nav-icon">◔</span>Help & Support</a><button class="nav-link" onclick="logout()" type="button"><span class="nav-icon">⇥</span>Logout</button></div></aside><main class="main"><header class="topbar"><div class="search"><span>⌕</span><input placeholder="Search API keys, reports, docs, and logs..." aria-label="Search"></div><select class="env" aria-label="Environment"><option>Production</option><option>Staging</option><option>Development</option></select><div class="top-actions"><button class="bell" type="button" onclick="showPage('support')" aria-label="Notifications">♢</button><div class="user"><div class="avatar">${esc((user?.name||'AR').split(' ').map(x=>x[0]).join('').slice(0,2))}</div><div><strong>${esc(user?.name||'')}</strong><span>${esc(user?.role||'')}</span></div><span>⌄</span></div></div></header><section class="content"><div id="pageHead"></div><div id="status" class="muted small"></div><div id="content"></div><div class="footer-line"><span>© 2026 Pepiko, Inc.</span><span>platform.pepiko.ai · connected to platform-core-service</span></div></section></main></div><div id="modal" class="hidden"></div>`; $$('a.nav-link[data-page],a[data-route]').forEach(a=>a.onclick=e=>{e.preventDefault();showPage(a.dataset.page||a.dataset.route)});}
+function head(title, desc, actions=''){ $('#pageHead').innerHTML=`<div class="page-head"><div class="page-title"><div class="breadcrumb">pepiko.ai / ${esc(title)}</div><h1>${esc(title)}</h1><p>${esc(desc)}</p></div><div class="page-actions">${actions}</div></div>`}
+function activate(id){currentPage=id; $$('.nav-link').forEach(b=>b.classList.toggle('active', b.dataset.page===id));}
+async function showPage(id,{replace=false,skipRoute=false}={}){if(skipRoute&&location.pathname!==routeForPage(id))history.replaceState({page:id},'',routeForPage(id));if(!skipRoute){if(replace)history.replaceState({page:id},'',routeForPage(id));else pushRoute(id)}activate(id); setStatus(''); try{await ({dashboard,playground,apiKeys,usage,billing,reports,projects,team,webhooks,audit,support}[id]||dashboard)()}catch(e){setStatus(e.message,true)}}
+function renderApp(){shell(); currentPage=pageFromPath(); showPage(currentPage,{replace:true,skipRoute:location.pathname===routeForPage(currentPage)})}
+window.addEventListener('popstate',()=>{if(token)showPage(pageFromPath(),{skipRoute:true})});
