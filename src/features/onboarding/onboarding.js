@@ -43,10 +43,12 @@ function renderRegistration() {
 
 async function createAccount(event) {
   event.preventDefault();
-  if (reg_password.value !== reg_confirm.value) {
-    setStatus("Passwords do not match.", true);
-    return;
-  }
+  if (!reg_first.value.trim()) return setFormError("First name is required.", reg_first, "status");
+  if (!reg_last.value.trim()) return setFormError("Last name is required.", reg_last, "status");
+  if (!reg_email.value.trim() || !reg_email.value.includes("@")) return setFormError("Enter a valid work email.", reg_email, "status");
+  if (!reg_company.value.trim()) return setFormError("Company name is required.", reg_company, "status");
+  if (!reg_password.value) return setFormError("Password is required.", reg_password, "status");
+  if (reg_password.value !== reg_confirm.value) return setFormError("Passwords do not match.", reg_confirm, "status");
   setStatus("Creating account...");
   const payload = {
     first_name: reg_first.value,
@@ -176,6 +178,7 @@ async function renderApiKeyStep() {
 }
 
 async function createOnboardingApiKey() {
+  if (!ob_key_name.value.trim()) return setFormError("API key name is required.", ob_key_name, "status");
   setStatus("Creating API key...");
   try {
     const projectId = Number(ob_project.value || onboardingState.organization.projectId);
@@ -208,8 +211,10 @@ function renderTeamStep() {
 }
 
 async function sendOnboardingInvites() {
-  setStatus("Sending invites...");
   const invites = [[ob_invite_1.value, ob_role_1.value], [ob_invite_2.value, ob_role_2.value]].filter(([email]) => email.trim());
+  const invalid = invites.find(([email]) => !email.includes("@"));
+  if (invalid) return setFormError("Enter a valid teammate email before sending invites.", invalid[0] === ob_invite_1.value ? ob_invite_1 : ob_invite_2, "status");
+  setStatus("Sending invites...");
   try {
     for (const [email, role] of invites) {
       await api("/api/customer/team", { method: "POST", body: JSON.stringify({ name: email.split("@")[0], email, role, project_access: [] }) });
