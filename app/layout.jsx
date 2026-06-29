@@ -7,6 +7,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="stylesheet" href="/styles.css" />
+        <link rel="stylesheet" href="/template-overrides.css" />
       </head>
       <body suppressHydrationWarning>{children}</body>
     </html>

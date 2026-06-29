@@ -9,7 +9,7 @@ The Platform Portal must never call Kong Admin API directly. Browser code calls 
 | Existing Platform Portal Feature | Current Files | Kong Runtime Mapping | Required Change |
 |---|---|---|---|
 | API Keys | `src/features/api-keys/apiKeys.js`, `/api/customer/api-keys` | Kong `key-auth` credential on tenant Consumer | Create, rotate, revoke, and delete must call core service; core service must sync Kong credential state. |
-| API Playground | `src/features/playground/playground.js`, `/api/customer/products` | Published API products backed by Kong public runtime routes | Use published products from core service. Calls from playground still go to the configured absolute endpoint, not Kong Admin API. |
+| API Playground | `src/features/playground/playground.js`, `/api/customer/products`, `/api/customer/runtime/playground/request` | Published API products backed by Kong public runtime routes | Use published products from core service. Playground submissions go through `platform-core-service`, which calls the configured runtime endpoint server-side. |
 | Dashboard | `src/features/dashboard/dashboard.js`, `/api/customer/dashboard` | Tenant runtime health summary | Add sync status, active runtime keys, quota status, and latest runtime warning from core service. |
 | Usage | `src/features/usage/usage.js`, `/api/customer/usage` | Runtime usage from Kong logs/metrics after ingestion | Core service returns normalized usage. Portal displays it only. |
 | Billing / Plan | `src/features/billing/billing.js`, `/api/customer/billing`, `/api/customer/plans` | Plan limits enforced by Kong rate-limiting plugin | Display plan and usage limit state. No customer-side Kong edits. |
@@ -205,16 +205,17 @@ Platform Portal should show published products under API Playground navigation. 
 1. Load the selected product from `/api/customer/products`.
 2. Render a product-specific playground page.
 3. Let the customer edit only JSON/text request body fields.
-4. Send the runtime request to `ProductConfig.endpoint_path`.
-5. Include customer-provided API key as `x-api-key` when the product requires key auth.
+4. Send the playground submission to `/api/customer/runtime/playground/request`.
+5. Core service looks up `ProductConfig.endpoint_path` and calls the runtime endpoint server-side.
+6. Include customer-provided API key as `x-api-key` from core service when the product requires key auth.
 6. Display real response on the right.
 
 Important:
 
 ```text
-API Playground calls runtime/product endpoints only.
+API Playground calls platform-core-service only.
 API Playground never calls Kong Admin API.
-Platform Portal remains a customer portal, not an API gateway.
+Platform Portal remains a customer portal; platform-core-service is the only server-side component allowed to call Kong/runtime endpoints.
 ```
 
 ## Suspended Customer Handling

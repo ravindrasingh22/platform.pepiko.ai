@@ -9,7 +9,7 @@ let onboardingState = {
 function renderRegistration() {
   document.body.innerHTML = `<main class="registration-layout">
   <section class="registration-left">
-    <div class="login-brand"><a class="brand" href="#" onclick="event.preventDefault();renderLogin()">pepiko<span class="brand-ai">.ai</span></a><span class="portal-label">Customer Portal</span></div>
+    <div class="login-brand"><a class="brand" href="#" onclick="event.preventDefault();renderLogin()"><img class="brand-logo" src="/assets/pepikoai_exact.svg" alt="pepiko.ai"></a><span class="portal-label">Customer Portal</span></div>
     <form class="registration-card" onsubmit="createAccount(event)">
       <h1>Create your Pepiko account</h1>
       <p>Start testing child-safety, PII, moderation, and policy routing APIs from one secure workspace.</p>
@@ -33,7 +33,7 @@ function renderRegistration() {
       <p style="color:var(--muted)">Your team gets a secure workspace for testing APIs, managing keys, tracking usage, and going live with safety workflows.</p>
       <div class="check-list">
         <div class="check-item"><span class="check-mark">✓</span><div><strong>Developer-first onboarding</strong><br><span style="color:var(--muted)">Create your first key and test APIs in minutes.</span></div></div>
-        <div class="check-item"><span class="check-mark">✓</span><div><strong>Production controls</strong><br><span style="color:var(--muted)">Projects, environments, webhooks, usage, and audit logs.</span></div></div>
+        <div class="check-item"><span class="check-mark">✓</span><div><strong>Production controls</strong><br><span style="color:var(--muted)">API keys, webhooks, usage, and audit logs.</span></div></div>
         <div class="check-item"><span class="check-mark">✓</span><div><strong>Team-ready access</strong><br><span style="color:var(--muted)">Invite admins, developers, viewers, and billing users.</span></div></div>
       </div>
     </div>
@@ -87,11 +87,11 @@ function onboardingChrome(step, body) {
   }).join("");
   return `<main class="onboarding-shell">
     <header class="onboarding-top">
-      <div class="login-brand"><a class="brand" href="#" onclick="event.preventDefault();renderLogin()">pepiko<span class="brand-ai">.ai</span></a><span class="portal-label">Customer Portal</span></div>
+      <div class="login-brand"><a class="brand" href="#" onclick="event.preventDefault();renderLogin()"><img class="brand-logo" src="/assets/pepikoai_exact.svg" alt="pepiko.ai"></a><span class="portal-label">Customer Portal</span></div>
       <div class="right"><span>Need help?</span><button class="btn" onclick="renderApp();showPage('support')" type="button">Contact support</button></div>
     </header>
     <div class="onboarding-layout">
-      <aside class="onboarding-side"><h2>Set up Pepiko</h2><p>Complete these steps to configure your customer portal, first API key, and production-ready workspace.</p><div class="steps">${stepList}</div></aside>
+      <aside class="onboarding-side"><h2>Set up Pepiko</h2><p>Complete these steps to configure your customer portal, first API key, and team access.</p><div class="steps">${stepList}</div></aside>
       ${body}
     </div>
   </main>`;
@@ -161,7 +161,6 @@ async function renderApiKeyStep() {
           <label>Key name<input id="ob_key_name" value="Development Key"></label>
           <label>Environment<select id="ob_key_env"><option value="staging">Test</option><option value="production">Production</option></select></label>
           <label>Scopes<select><option>classify:write, usage:read</option><option>classify:write</option><option>read-only</option></select></label>
-          <label>Project<select id="ob_project"><option value="">Default Project</option></select></label>
         </div>
         <code id="ob_key_preview">${onboardingState.apiKey ? esc(onboardingState.apiKey) : "pk_test_••••••••••••••••••••••••"}</code>
       </div>
@@ -169,20 +168,13 @@ async function renderApiKeyStep() {
       <div class="onboarding-actions"><button class="btn" onclick="renderOnboarding('product')">Back</button><div class="right-actions"><button class="btn" onclick="renderApp();showPage('apiKeys')">Manage keys</button><button class="btn primary" onclick="createOnboardingApiKey()">Create key & continue</button></div></div>
     </div>
   </section>`);
-  try {
-    const projects = await api("/api/customer/projects");
-    if (projects.length) {
-      ob_project.innerHTML = projects.map(project => `<option value="${project.id}" ${project.id===onboardingState.organization.projectId ? "selected" : ""}>${esc(project.name)}</option>`).join("");
-    }
-  } catch {}
 }
 
 async function createOnboardingApiKey() {
   if (!ob_key_name.value.trim()) return setFormError("API key name is required.", ob_key_name, "status");
   setStatus("Creating API key...");
   try {
-    const projectId = Number(ob_project.value || onboardingState.organization.projectId);
-    const data = await api("/api/customer/api-keys", { method: "POST", body: JSON.stringify({ name: ob_key_name.value, project_id: projectId, environment: ob_key_env.value, allowed_products: ["child_safety_classifier", "moderation_api"], rate_limit_per_minute: 500 }) });
+    const data = await api("/api/customer/api-keys", { method: "POST", body: JSON.stringify({ name: ob_key_name.value }) });
     onboardingState.apiKey = data.api_key || data.masked_key;
     renderOnboarding("team");
   } catch (error) {
@@ -203,7 +195,7 @@ function renderTeamStep() {
           <select id="ob_role_2"><option value="billing_manager">Billing</option><option value="admin">Admin</option><option value="developer">Developer</option><option value="viewer">Viewer</option></select>
         </div>
       </div>
-      <div class="side-card" style="margin-top:22px"><h3>Role guide</h3><p><strong>Admin</strong> manages account, billing, keys, and team access.</p><p><strong>Developer</strong> manages keys, playground, projects, and webhooks.</p><p><strong>Viewer</strong> can view reports, usage, and audit logs.</p></div>
+      <div class="side-card" style="margin-top:22px"><h3>Role guide</h3><p><strong>Admin</strong> manages account, billing, keys, and team access.</p><p><strong>Developer</strong> manages keys, playground, and webhooks.</p><p><strong>Viewer</strong> can view reports, usage, and audit logs.</p></div>
       <div id="status" class="login-status" role="status" aria-live="polite"></div>
       <div class="onboarding-actions"><button class="btn" onclick="renderOnboarding('apiKey')">Back</button><div class="right-actions"><button class="btn" onclick="renderOnboarding('complete')">Skip</button><button class="btn primary" onclick="sendOnboardingInvites()">Send invites</button></div></div>
     </div>
@@ -236,7 +228,6 @@ function renderCompleteStep() {
       <div class="quick-grid" style="margin:28px auto;max-width:760px;text-align:left">
         <button class="quick-card" onclick="renderApp();showPage('playground')" type="button"><div class="quick-icon">↯</div><div><strong>Open API Playground</strong><span>Send your first test request</span></div></button>
         <button class="quick-card" onclick="renderApp();showPage('apiKeys')" type="button"><div class="quick-icon">⚿</div><div><strong>Manage API Keys</strong><span>Create production keys</span></div></button>
-        <button class="quick-card" onclick="renderApp();showPage('projects')" type="button"><div class="quick-icon">□</div><div><strong>Configure Project</strong><span>Add app environments</span></div></button>
         <button class="quick-card" onclick="renderApp();showPage('webhooks')" type="button"><div class="quick-icon">↝</div><div><strong>Add Webhook</strong><span>Receive event notifications</span></div></button>
       </div>
       <button class="btn primary" onclick="renderApp()" type="button">Go to dashboard</button>
